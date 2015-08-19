@@ -8,18 +8,27 @@
 module.exports = {
 	
   'new': function (req, res) {
+    res.locals.flash = _.clone(req.session.flash);
+    req.session.flash = {};
     res.view();
   },
 
   create: function (req, res, next) {
-    debugger
 
     User.create( req.params.all(), function userCreated (err, user) {
-      if (err) return next(err);
+      if (err) {
+        console.log(err);
 
+        req.session.flash = {
+          err: err.invalidAttributes
+        }
+
+        return res.redirect('/user/new');
+      }
+
+      req.session.flash = {};
       res.json(user);
     });
   }
 
 };
-
