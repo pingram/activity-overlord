@@ -6,10 +6,8 @@
  */
 
 module.exports = {
-	
+
   'new': function (req, res) {
-    res.locals.flash = _.clone(req.session.flash);
-    req.session.flash = {};
     res.view();
   },
 
@@ -26,7 +24,6 @@ module.exports = {
         return res.redirect('/user/new');
       }
 
-      req.session.flash = {};
       res.json(user);
     });
   }
