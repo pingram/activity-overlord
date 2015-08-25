@@ -24,6 +24,11 @@ module.exports = {
       unique: true
     },
 
+    admin: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     encryptedPassword: {
       type: 'string'
     },
@@ -39,7 +44,6 @@ module.exports = {
   },
 
   beforeCreate: function (values, next) {
-
     if (!values.password || values.password !== values.confirmation) {
       return next({err: ["Password doesn't match password confirmation."]});
     }

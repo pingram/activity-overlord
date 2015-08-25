@@ -50,13 +50,15 @@
           <ul class="nav navbar-nav">
             <% if (session.authenticated) { %>
               <li class="active"><a href="/user/show/<%= session.User.id %>"><%= session.User.name %> </a> </li>
-            <li><a href="/user">User Administration</a></li>
-            <li><a href="#">Placeholder2</a></li>
+            <% } %>
+            <% if (session.authenticated && session.User.admin) { %>
+              <li><a href="/user">User Administration</a></li>
+              <li><a href="#">Placeholder2</a></li>
             <% } %>
           </ul>
           <div class="navbar-right">
             <% if (session.authenticated) { %>
-              <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">sign-out</a>
+              <a class="btn btn-default navbar-btn navbar-right" href="/session/destroy">Sign Out</a>
             <% } %>
           </div>
           <% if (!session.authenticated) { %>

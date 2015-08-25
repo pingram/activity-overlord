@@ -53,6 +53,11 @@ module.exports = {
         req.session.authenticated = true;
         req.session.User = user;
 
+        if (user.admin) {
+          res.redirect('/user');
+          return;
+        }
+
         res.redirect('/user/show/' + user.id);
       });
     });
