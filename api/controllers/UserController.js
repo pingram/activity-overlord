@@ -12,7 +12,12 @@ module.exports = {
   },
 
   create: function (req, res, next) {
-    User.create( req.params.all(), function userCreated (err, user) {
+
+    // users can't be created as admins:
+    var userObj = req.params.all();
+    delete userObj.admin;
+
+    User.create( userObj, function userCreated (err, user) {
       if (err) {
         console.log(err);
 
@@ -62,6 +67,12 @@ module.exports = {
   },
 
   update: function (req, res, next) {
+    var userObj = req.params.all();
+    // remove parameters that can only be set by admin:
+    if(!req.session.User.admin){
+      delete userObj.admin;
+    }
+
     User.update(req.param('id'), req.params.all(), function userUpdated (err) {
       if (err) {
         return res.redirect('/user/edit/' + req.param('id'));
